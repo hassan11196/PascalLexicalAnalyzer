@@ -1,18 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 import os
 import string
 import re
 import pprint
 os.getcwd()
-
-
-# In[31]:
-
 
 class Token(object):
     KEYWORD, ID, SYM, STRCONST, INTCONST, READCONST, ASSIGN, COLON, COMMA, SEMICOLON, DOT, EQ, NQ, LT, LTE, GT, GTE, QUOTE, INTEGER, PLUS, MINUS, MUL, DIV, LPAREN, RPAREN, EOF, TERM, AND, OR, NOT = (
@@ -131,10 +124,10 @@ class Lexer(object):
         self.pos = 0
         self.current_char = self.text[self.pos]
         self.line_no = 0
-        token = lexer.get_next_token()
+        token = self.get_next_token()
         while token.type != Token.EOF:
             token_list.append(token)
-            token = lexer.get_next_token()
+            token = self.get_next_token()
             
         self.pos = temp_pos
         self.current_char = temp_current_char
@@ -247,68 +240,6 @@ class Lexer(object):
             self.error()
 
         return Token(Token.EOF, None, self.line_no, self.col_no)
-
-
-# In[32]:
-
-
-text = """
-
-
-"""
-
-lexer = Lexer(text)
-token = lexer.get_next_token()
-while token.type != Token.EOF:
-    print(token)
-    token = lexer.get_next_token()
-
-
-# In[33]:
-
-
-text = ""
-with open("./inputs/source_code.pas", 'r') as pascal_file:
-    text = "".join(pascal_file.readlines())
-
-
-# In[34]:
-
-
-lexer = Lexer(text)
-token = lexer.get_next_token()
-
-with open("./outputs/pascal_tokens.csv", 'w') as token_file:
-    while token.type != Token.EOF:
-        print(token)
-        token_file.write(f"{token.type}, {token.value}, {token.line_no}, {token.col_no}\n")
-        token = lexer.get_next_token()
-        
-with open("./outputs/symbol_table.csv", 'w') as symbol_table_file:
-    for identifer, id_type in lexer.update_symbol_table().items():
-        symbol_table_file.write(f"{identifer}, {id_type}\n")
-
-
-# In[35]:
-
-
-lexer.symbol_table
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
 
 
 
