@@ -1,0 +1,8 @@
+checkMyAbility, PROGRAM
+counter, integer
+number, integer
+factorial, integer
+height, real
+width, real
+breadth, real
+volume, real
